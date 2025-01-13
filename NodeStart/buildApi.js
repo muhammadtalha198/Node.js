@@ -1,7 +1,13 @@
-// API Build
+// build Api 
+
 
 const url = require('url');
 const http = require('http');
+const fs  = require('fs');
+
+const data = fs.readFileSync(`${__dirname}/data.json`,'utf8');         
+const dataObject  = JSON.parse(data);
+
 
 const server = http.createServer((req, res)=> {
     
@@ -16,7 +22,13 @@ const server = http.createServer((req, res)=> {
         
         console.log(req.url);
         res.end("This is the product");
-    }else{
+    }
+    else if (pathName === '/api'){
+            // console.log(productdata);
+            res.writeHead(200,{'Conteent-type': 'application/json'});
+            res.end(data);
+    }
+    else{
         res.writeHead(404,{
             'Conteent-type': 'text/html',
             'my-own-header': 'hello-world'
